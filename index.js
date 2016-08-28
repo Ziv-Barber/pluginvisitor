@@ -438,35 +438,35 @@ PluginVisitor.prototype.visitPluginsAsync = function ( methodName, asyncCallback
 	var args = ( arguments.length === 1 ? [arguments[0]] : Array.apply ( null, arguments ) );
 	var callArgv = args.slice ( 2 ); // The first argument will be the async callback.
 
-	if ( !funcend || typeof funcend !== 'function' ) {
-		funcend = function () {};
+	if ( !asyncCallback || typeof asyncCallback !== 'function' ) {
+		asyncCallback = function () {};
 	} // Endif.
 
-	function runNextPluginAsync ( pluginsList, curIndexId, funcend ) {
+	function runNextPluginAsync ( pluginsList, curIndexId, asyncCallback ) {
 		if ( pluginsList.length <= curIndexId ) {
-			funcend ();
+			asyncCallback ();
 			return;
 		} // Endif.
 
 		while ( !pluginsList[curIndexId] ) {
 			curIndexId++;
 			if ( pluginsList.length <= curIndexId ) {
-				funcend ();
+				asyncCallback ();
 				return;
 			} // Endif.
 		} // End of while loop.
 
 		if ( pluginsList[curIndexId][methodName] && typeof pluginsList[curIndexId][methodName] === 'function' ) {
 			if ( pluginsList[curIndexId][methodName].apply ( pluginsList[curIndexId], callArgv ) ) {
-				runNextPluginAsync ( pluginsList, curIndexId + 1, funcend );
+				runNextPluginAsync ( pluginsList, curIndexId + 1, asyncCallback );
 
 			} else {
-				funcend ();
+				asyncCallback ();
 			} // Endif.
 		} // Endif.
 	}
 
-	runNextPluginAsync ( this.pluginsList, 0, funcend );
+	runNextPluginAsync ( this.pluginsList, 0, asyncCallback );
 };
 
 /**
