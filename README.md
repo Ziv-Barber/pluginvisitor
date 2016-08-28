@@ -388,6 +388,10 @@ grunt jsdoc
 <a name="a7"></a>
 ## Support: ##
 
+The Slack team:
+
+https://zivbarber.slack.com/messages/pluginvisitor/
+
 Please visit the PluginVisitor Google Group:
 
 https://groups.google.com/d/forum/node-pluginvisitor
@@ -403,11 +407,11 @@ https://groups.google.com/d/forum/node-pluginvisitor
 
 Features todo:
 
-### Version 1.0.x: ###
+### Version 1.x: ###
 
 - Bug fixes and some extra features.
 
-### Version 2.0.x: ###
+### Version 2.x: ###
 
 - Browser support?
 
