@@ -1,0 +1,39 @@
+{
+  "name": "pluginvisitor",
+  "version": "1.0.0",
+  "description": "Generic plugins and presets module based on the visitor design pattern + configuration files + loading plugins and presets from your package.json. In the style of Babel compiler.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "keywords": [
+    "plugin",
+    "plugins",
+    "preset",
+    "presets",
+    "visitor"
+  ],
+  "url": "https://github.com/Ziv-Barber/pluginvisitor",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Ziv-Barber/pluginvisitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ziv-Barber/pluginvisitor/issues"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-jsdoc": "^2.1.0",
+    "mocha": "^3.0.2",
+    "time-grunt": "^1.4.0"
+  },
+  "mylib": {
+    "plugins": [
+	  "testplug1"
+	]
+  },
+  "author": "Ziv Barber",
+  "license": "MIT"
+}
