@@ -33,19 +33,7 @@
 //
 
 var path = require ( 'path' );
-
-function is_array ( obj ) {
-	// Make sure an array has a class attribute of [object Array]:
-	var check_class = Object.prototype.toString.call ( [] );
-	if ( check_class === '[object Array]' ) {
-		// Test passed, now check:
-		return Object.prototype.toString.call ( obj ) === '[object Array]';
-
-	} else
-	{
-		return false;
-	}
-}
+var util = require ( 'util' );
 
 function createMergedSettings () {
 	var options = {};
@@ -262,11 +250,11 @@ PluginVisitor.prototype.loadRcFile = function ( rcFile ) {
 	} // End of try catch.
 
 	if ( packageData && typeof packageData === 'object' ) {
-		if ( packageData.plugins && is_array ( packageData.plugins ) ) {
+		if ( packageData.plugins && util.isArray ( packageData.plugins ) ) {
 			selfThis.registerPlugin ( packageData.plugins );
 		} // Endif.
 
-		if ( packageData.presets && is_array ( packageData.presets ) ) {
+		if ( packageData.presets && util.isArray ( packageData.presets ) ) {
 			selfThis.registerPreset ( packageData.presets );
 		} // Endif.
 	} // Endif.
@@ -296,11 +284,11 @@ PluginVisitor.prototype.loadPackageFile = function () {
 	} // End of try catch.
 
 	if ( packageData && typeof packageData === 'object' && packageData[selfThis.options.moduleName] && typeof packageData[selfThis.options.moduleName] === 'object' ) {
-		if ( packageData[selfThis.options.moduleName].plugins && is_array ( packageData[selfThis.options.moduleName].plugins ) ) {
+		if ( packageData[selfThis.options.moduleName].plugins && util.isArray ( packageData[selfThis.options.moduleName].plugins ) ) {
 			selfThis.registerPlugin ( packageData[selfThis.options.moduleName].plugins );
 		} // Endif.
 
-		if ( packageData[selfThis.options.moduleName].presets && is_array ( packageData[selfThis.options.moduleName].presets ) ) {
+		if ( packageData[selfThis.options.moduleName].presets && util.isArray ( packageData[selfThis.options.moduleName].presets ) ) {
 			selfThis.registerPreset ( packageData[selfThis.options.moduleName].presets );
 		} // Endif.
 	} // Endif.
@@ -321,7 +309,7 @@ PluginVisitor.prototype.registerPlugin = function ( pluginName, pluginOptions ) 
 
 	if ( !pluginName || typeof pluginName !== 'string' ) {
 		// Request to load array of plugins:
-		if ( is_array ( pluginName ) ) {
+		if ( util.isArray ( pluginName ) ) {
 			selfThis.verboseEvent ( "Loading array of plugins", 75 );
 
 			pluginName.forEach ( function ( value ) {
@@ -377,7 +365,7 @@ PluginVisitor.prototype.registerPreset = function ( presetName, presetOptions ) 
 
 	if ( !presetName || typeof presetName !== 'string' ) {
 		// Request to load array of presets:
-		if ( is_array ( presetName ) ) {
+		if ( util.isArray ( presetName ) ) {
 			selfThis.verboseEvent ( "Loading array of presets", 75 );
 
 			presetName.forEach ( function ( value ) {
@@ -479,5 +467,4 @@ module.exports = function ( options ) {
 	return new PluginVisitor ( options );
 };
 
-module.exports.is_array = is_array;
 module.exports.createMergedSettings = createMergedSettings;

@@ -1,6 +1,6 @@
 {
   "name": "pluginvisitor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generic powerful plugins and presets module for Node.js based on the visitor design pattern + configuration files + loading plugins and presets from your package.json. In the style of Babel compiler's plugins interface.",
   "main": "index.js",
   "scripts": {
