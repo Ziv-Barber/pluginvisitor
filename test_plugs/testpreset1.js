@@ -44,6 +44,7 @@ var PresetCode = function ( pluginsMan, options ) {
 
 	// Register it with the given options:
 	this.pluginsMan.registerPlugin ( plugin, options );
+	return this;
 };
 
 /**

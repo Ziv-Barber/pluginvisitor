@@ -416,45 +416,45 @@ PluginVisitor.prototype.visitPlugins = function ( methodName, argv ) {
 };
 
 /**
- * Call an async method on all the plugins.
+ * Call an async method on all the plugins (middleware style).
  *
  * @param {string} methodName - The name of the method to run.
- * @param {function} asyncCallback - Function to call with the result.
+ * @param {function} nextCallback - Function to call after visiting all the plugins.
  * @param {...*} argv - Optional parameters.
  */
-PluginVisitor.prototype.visitPluginsAsync = function ( methodName, asyncCallback, argv ) {
+PluginVisitor.prototype.visitPluginsAsync = function ( methodName, nextCallback, argv ) {
 	var args = ( arguments.length === 1 ? [arguments[0]] : Array.apply ( null, arguments ) );
 	var callArgv = args.slice ( 2 ); // The first argument will be the async callback.
 
-	if ( !asyncCallback || typeof asyncCallback !== 'function' ) {
-		asyncCallback = function () {};
+	if ( !nextCallback || typeof nextCallback !== 'function' ) {
+		nextCallback = function () {};
 	} // Endif.
 
-	function runNextPluginAsync ( pluginsList, curIndexId, asyncCallback ) {
+	function runNextPluginAsync ( pluginsList, curIndexId, nextCallback ) {
 		if ( pluginsList.length <= curIndexId ) {
-			asyncCallback ();
+			nextCallback ();
 			return;
 		} // Endif.
 
 		while ( !pluginsList[curIndexId] ) {
 			curIndexId++;
 			if ( pluginsList.length <= curIndexId ) {
-				asyncCallback ();
+				nextCallback ();
 				return;
 			} // Endif.
 		} // End of while loop.
 
 		if ( pluginsList[curIndexId][methodName] && typeof pluginsList[curIndexId][methodName] === 'function' ) {
 			if ( pluginsList[curIndexId][methodName].apply ( pluginsList[curIndexId], callArgv ) ) {
-				runNextPluginAsync ( pluginsList, curIndexId + 1, asyncCallback );
+				runNextPluginAsync ( pluginsList, curIndexId + 1, nextCallback );
 
 			} else {
-				asyncCallback ();
+				nextCallback ();
 			} // Endif.
 		} // Endif.
 	}
 
-	runNextPluginAsync ( this.pluginsList, 0, asyncCallback );
+	runNextPluginAsync ( this.pluginsList, 0, nextCallback );
 };
 
 /**

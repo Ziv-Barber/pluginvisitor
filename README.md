@@ -27,9 +27,9 @@ You can load one or more plugins from either direct call, configuration file or 
 - You can load one or more groups of plugins ("presets").
 - Presets can include both plugins and other presets.
 - Both plugins and presets can have configurations.
-- You can load plugins and presets automatically by using either a configuration file or place the list of plugins and presets in your project's package.json.
 - Using the visitor design pattern so you can run a method (both sync and async) on all the loaded plugins.
 - For the user using of both plugins and presets working almost the same as on the Babel compiler.
+- Node.js only: You can load plugins and presets automatically by using either a configuration file or place the list of plugins and presets in your project's package.json.
 
 <a name="a2"></a>
 ## Installation: ##
@@ -43,7 +43,13 @@ $ git clone git://github.com/Ziv-Barber/pluginvisitor.git
 via npm:
 
 ```bash
-$ npm install PluginVisitor
+$ npm install pluginvisitor
+```
+
+via bower:
+
+```bash
+$ bower install pluginvisitor
 ```
 
 This module is depending on:
@@ -61,6 +67,18 @@ var pluginsMan = require ( 'PluginVisitor' ) ({
 	moduleName: 'mymodule', // The nane of the section inside package.json. Also effecting the name of the configurations file.
 	enableRcFile: true, // Load plugins and presets from the file .mymodulerc if it exists.
 	enablePackageJson: true // Load plugins and presets from package.json.
+});
+```
+
+Or in the browser:
+
+```html
+<script src="pluginvisitor/dist/pluginvisitor.js"></script>
+```
+
+```js
+var pluginsMan = pluginvisitor ({
+	// Some configurations...
 });
 ```
 
@@ -129,11 +147,14 @@ And if you ready need it then the constructor method also accepting more then on
 var pluginsMan = require ( 'PluginVisitor' ) ( options1, options2, options3 );
 ```
 
-If you want to manually load a plugin:
+If you want to manually load a plugin (Node.js):
 
 ```js
 pluginsMan.registerPlugin ( 'pluginName' );
 ```
+
+NOTE:
+Right now for the browser we are supporting only loading plugin objects and not files.
 
 Same with passing configurations to the plugin:
 
@@ -381,8 +402,8 @@ grunt jsdoc
 <a name="a6"></a>
 ## FAQ: ##
 
-- Q: Browser version?
-- A: Sometimes in the future.
+- Q: Does it work on a browser?
+- A: Soon
 
 
 <a name="a7"></a>
@@ -407,13 +428,9 @@ https://groups.google.com/d/forum/node-pluginvisitor
 
 Features todo:
 
-### Version 1.x: ###
-
-- Bug fixes and some extra features.
-
 ### Version 2.x: ###
 
-- Browser support?
+- Full UMD.
 
 <a name="a10"></a>
 ## License: ##

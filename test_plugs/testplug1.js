@@ -56,6 +56,7 @@ var PluginCode = function ( pluginsMan, options ) {
 
 	// Singal that at last one copy of this plugin is loaded:
 	this.pluginsMan.setPluginInfo ( 'testplug1', true );
+	return this;
 };
 
 /**

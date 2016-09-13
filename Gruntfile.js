@@ -50,12 +50,55 @@ module.exports = function ( grunt ) {
 					'index.js'
 				],
 				options: {
-					'destination': 'doc',
-					'package': 'package.json',
-					'readme': 'README.md'
-					// template : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template",
-					// configure : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template/jsdoc.conf.json"
+					destination: 'doc',
+					package: 'package.json',
+					readme: 'README.md',
+					template : "./node_modules/jaguarjs-jsdoc"
 				}
+			}
+		},
+
+		browserify: {
+			all: {
+				src: [
+					'index.js'
+				],
+				dest: 'dist/<%= pkg.name %>.js'
+			},
+			options: {
+				browserifyOptions: {
+					standalone: '<%= pkg.name %>',
+					debug: true
+				}
+			}
+		},
+
+		watch: {
+			all: {
+				files: [
+					'index.js'
+				],
+				tasks: [
+					'jshint',
+					'browserify:all',
+					'uglify:all'
+				]
+			}
+		},
+
+		uglify: {
+			all: {
+				src: 'dist/<%= pkg.name %>.js',
+				dest: 'dist/<%= pkg.name %>.min.js'
+			},
+			options: {
+				mangle: false
+			}
+		},
+
+		karma: {
+			unit: {
+				configFile: 'karma.conf.js'
 			}
 		}
 	});
@@ -74,6 +117,42 @@ module.exports = function ( grunt ) {
 		'jshint'
 	]);
 
+	/**
+	 * Create UMD distribution package.
+	 * @name dist
+	 * @memberof gruntfile
+	 * @kind function
+	 */
+	grunt.registerTask ( 'dist', [
+		'jshint',
+		'browserify:all',
+		'uglify:all'
+	]);
+
+	/**
+	 * The live grunt task.
+	 * @name live
+	 * @memberof gruntfile
+	 * @kind function
+	 */
+	grunt.registerTask ( 'live', [
+		'jshint',
+		'browserify:all',
+		'uglify:all',
+		'watch:all'
+	]);
+
+	/**
+	 * Execute tests using karma.
+	 * @name dist
+	 * @memberof gruntfile
+	 * @kind function
+	 */
+	grunt.registerTask ( 'runkarma', [
+		'dist',
+		'karma:unit'
+	]);
+
 	//
 	// More Grunt tasks:
 	//
@@ -82,6 +161,10 @@ module.exports = function ( grunt ) {
 	// Load all the modules that we need:
 	//
 
+	grunt.loadNpmTasks ( 'grunt-browserify' );
 	grunt.loadNpmTasks ( 'grunt-contrib-jshint' );
+	grunt.loadNpmTasks ( 'grunt-contrib-uglify' );
+	grunt.loadNpmTasks ( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks ( 'grunt-jsdoc' );
+	grunt.loadNpmTasks ( 'grunt-karma' );
 };

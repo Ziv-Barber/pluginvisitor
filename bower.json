@@ -1,0 +1,26 @@
+{
+  "name": "pluginvisitor",
+  "description": "Generic powerful plugins and presets engine based on the visitor design pattern. In the style of Babel compiler's plugins interface.",
+  "main": "index.js",
+  "authors": [
+    "Ziv Barber"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "plugin",
+    "plugins",
+    "preset",
+    "presets",
+    "visitor"
+  ],
+  "homepage": "https://github.com/Ziv-Barber/pluginvisitor",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "doc",
+    "test",
+    "tests",
+	"test_plugs"
+  ]
+}
